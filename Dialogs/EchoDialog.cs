@@ -21,8 +21,10 @@ namespace Microsoft.Bot.Sample.SimpleEchoBot
         public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> argument)
         {
             var message = await argument;
+            await context.PostAsync($"{this.count++}: You said {message.Text}");
+            context.Wait(MessageReceivedAsync);
 
-            if (message.Text == "reset")
+            /*if (message.Text == "reset")
             {
                 PromptDialog.Confirm(
                     context,
@@ -33,24 +35,8 @@ namespace Microsoft.Bot.Sample.SimpleEchoBot
             }
             else
             {
-                await context.PostAsync($"{this.count++}: You said {message.Text}");
-                context.Wait(MessageReceivedAsync);
-            }
-        }
-
-        public async Task AfterResetAsync(IDialogContext context, IAwaitable<bool> argument)
-        {
-            var confirm = await argument;
-            if (confirm)
-            {
-                this.count = 1;
-                await context.PostAsync("Reset count.");
-            }
-            else
-            {
-                await context.PostAsync("Did not reset count.");
-            }
-            context.Wait(MessageReceivedAsync);
+                
+            }*/
         }
 
     }
